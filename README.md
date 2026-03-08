@@ -1,4 +1,4 @@
-# 🛡️ ScamShield - AI-Powered Phone Number Intelligence
+# 🛡️ ScamShield (RingAI) - AI-Powered Phone Number Intelligence
 
 **A cross-platform mobile app (iOS & Android) that helps users identify scam phone numbers before answering.**
 
