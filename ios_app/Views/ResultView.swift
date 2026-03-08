@@ -15,22 +15,25 @@ struct ResultView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 24) {
-                    // Scam Score Circle
+                    // Scam Score Circle with shadow
                     ScoreCircleView(score: result.scamScore)
                         .padding(.top, 20)
+                        .shadow(color: result.statusColor.opacity(0.3), radius: 20, x: 0, y: 10)
                     
-                    // Status Message
+                    // Status Message with improved styling
                     VStack(spacing: 8) {
                         Text(result.statusTitle)
-                            .font(.title2)
+                            .font(.title)
                             .fontWeight(.bold)
                             .foregroundColor(result.statusColor)
                         
                         Text(result.statusMessage)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
+                            .font(.body)
+                            .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
+                            .padding(.horizontal)
                     }
+                    .padding(.vertical, 8)
                     
                     // Phone Number Details
                     DetailsSectionView(result: result)
@@ -181,8 +184,14 @@ struct RedFlagsSection: View {
                 }
             }
             .padding()
-            .background(Color.red.opacity(0.1))
-            .cornerRadius(12)
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color.red.opacity(0.08))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16)
+                            .stroke(Color.red.opacity(0.3), lineWidth: 1)
+                    )
+            )
         }
     }
 }
@@ -220,34 +229,52 @@ struct ActionButtonsSection: View {
     
     var body: some View {
         VStack(spacing: 12) {
-            // Block Button
+            // Block Button with improved styling
             Button(action: {
                 // TODO: Add to blocklist
             }) {
                 HStack {
                     Image(systemName: "nosign")
+                        .font(.headline)
                     Text("Block Number")
+                        .fontWeight(.semibold)
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.red)
+                .background(
+                    LinearGradient(
+                        colors: [Color.red, Color.red.opacity(0.8)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
                 .foregroundColor(.white)
-                .cornerRadius(12)
+                .cornerRadius(14)
+                .shadow(color: Color.red.opacity(0.3), radius: 8, x: 0, y: 4)
             }
             
-            // Report Button
+            // Report Button with improved styling
             Button(action: {
                 showingReportSheet = true
             }) {
                 HStack {
-                    Image(systemName: "flag")
+                    Image(systemName: "flag.fill")
+                        .font(.headline)
                     Text("Report as Scam")
+                        .fontWeight(.semibold)
                 }
                 .frame(maxWidth: .infinity)
                 .padding()
-                .background(Color.orange)
+                .background(
+                    LinearGradient(
+                        colors: [Color.orange, Color.orange.opacity(0.8)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
                 .foregroundColor(.white)
-                .cornerRadius(12)
+                .cornerRadius(14)
+                .shadow(color: Color.orange.opacity(0.3), radius: 8, x: 0, y: 4)
             }
             .sheet(isPresented: $showingReportSheet) {
                 ReportScamView(phoneNumber: result.phoneNumber)
